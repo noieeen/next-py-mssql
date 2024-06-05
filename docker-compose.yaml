@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: mssql_container
+    environment:
+      - SA_PASSWORD=YourStrongPassword!123
+      - ACCEPT_EULA=Y
+    ports:
+      - "1433:1433"
+    volumes:
+      - mssql_data:/var/opt/mssql
+
+  web:
+    image: test-next-docker:latest
+    ports:
+      - "3011:3000"
+  
+  pyml:
+    image: "todo-api:v1"
+    ports:
+      - "8000:80"
+
+volumes:
+  mssql_data:
+    driver: local
